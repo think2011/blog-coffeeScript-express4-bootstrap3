@@ -1,4 +1,5 @@
-mongodb = require './db'
+settings = require '../settings'
+mongodb  = require('mongodb').Db
 
 class User
   constructor: (user) ->
@@ -6,19 +7,19 @@ class User
 
   ### 读取 ###
   @get: (name, callback) ->
-    mongodb.open (err, db) ->
+    mongodb.connect settings.url, (err, db) ->
       if err
         callback err
 
       db.collection 'users', (err, collection) ->
         if err
-          mongodb.close()
+          db.close()
           return callback err
 
         collection.findOne(
           name: name
         , (err, user) ->
-          mongodb.close()
+          db.close()
           if err
             return callback err
 
@@ -35,21 +36,21 @@ class User
       password: @password
 
     # 打开数据库
-    mongodb.open (err, db) ->
+    mongodb.connect settings.url, (err, db) ->
       if err
         return callback err
 
       # 读取 users 集合
       db.collection 'users', (err, collection) ->
         if err
-          mongodb.close()
+          db.close()
           return callback err
 
         collection.insert(
           user
         , safe: true
         , (err, user) ->
-            mongodb.close()
+            db.close()
             if err
               return callback err
 

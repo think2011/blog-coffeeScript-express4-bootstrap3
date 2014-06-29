@@ -1,4 +1,5 @@
-mongodb    = require './db'
+settings = require '../settings'
+mongodb  = require('mongodb').Db
 markdown   = require('markdown').markdown
 
 class Post
@@ -8,13 +9,13 @@ class Post
 
   ### 读取 ###
   @getOne: (name, day, title, callback) ->
-    mongodb.open (err, db) ->
+    mongodb.connect settings.url, (err, db) ->
       if err
         callback err
 
       db.collection 'posts', (err, collection) ->
         if err
-          mongodb.close()
+          db.close()
           return callback err
 
           # 根据用户名，日期，标题修改文章
@@ -27,7 +28,7 @@ class Post
           time : +day # 被坑了，这货需要转换为数值型
         , (err, doc) ->
           if err
-            mongodb.close()
+            db.close()
             return callback err
 
           if doc
@@ -38,7 +39,7 @@ class Post
             , $inc :
                 pv: 1
             , (err) ->
-              mongodb.close()
+              db.close()
               if err
                 return callback err
 
@@ -57,13 +58,13 @@ class Post
 
   ### 读取存档 ###
   @getArchive: (callback) ->
-    mongodb.open (err, db) ->
+    mongodb.connect settings.url, (err, db) ->
       if err
         callback err
 
       db.collection 'posts', (err, collection) ->
         if err
-          mongodb.close()
+          db.close()
           return callback err
 
         # 返回值包含 name、time、title 属性的文档
@@ -72,7 +73,7 @@ class Post
           title: 1
           time : 1
         ).sort(time: -1).toArray (err, doc) ->
-          mongodb.close()
+          db.close()
           if err
             return callback err
 
@@ -82,18 +83,18 @@ class Post
 
   ### 读取标签 ###
   @getTags: (callback) ->
-    mongodb.open (err, db) ->
+    mongodb.connect settings.url, (err, db) ->
       if err
         callback err
 
       db.collection 'posts', (err, collection) ->
         if err
-          mongodb.close()
+          db.close()
           return callback err
 
         # 找出key的所有不同值
         collection.distinct 'tags', (err, docs) ->
-          mongodb.close()
+          db.close()
 
           if err
             return callback err
@@ -104,13 +105,13 @@ class Post
 
   ### 读取具体标签 ###
   @getTag: (tag, callback) ->
-    mongodb.open (err, db) ->
+    mongodb.connect settings.url, (err, db) ->
       if err
         callback err
 
       db.collection 'posts', (err, collection) ->
         if err
-          mongodb.close()
+          db.close()
           return callback err
 
         collection.find(
@@ -120,7 +121,7 @@ class Post
           title: 1
           time: 1
         ).sort(time: -1).toArray (err, docs) ->
-          mongodb.close()
+          db.close()
           if err
             return callback err
 
@@ -131,13 +132,13 @@ class Post
   ### 编辑 ###
   @edit: (name, day, title, callback) ->
 
-    mongodb.open (err, db) ->
+    mongodb.connect settings.url, (err, db) ->
       if err
         callback err
 
       db.collection 'posts', (err, collection) ->
         if err
-          mongodb.close()
+          db.close()
           return callback err
 
         # 根据用户名，日期，标题查询文章
@@ -146,7 +147,7 @@ class Post
           title: title
           time : +day # 被坑了，这货需要转换为数值型
         , (err, doc) ->
-          mongodb.close()
+          db.close()
           if err
             return callback err
 
@@ -155,13 +156,13 @@ class Post
 
   ### 更新 ###
   @update: (name, day, title, post, tags, callback) ->
-    mongodb.open (err, db) ->
+    mongodb.connect settings.url, (err, db) ->
       if err
         callback err
 
       db.collection 'posts', (err, collection) ->
         if err
-          mongodb.close()
+          db.close()
           return callback err
 
         # 根据用户名，日期，标题修改文章
@@ -173,7 +174,7 @@ class Post
           post: post
           tags: tags
         , (err) ->
-          mongodb.close()
+          db.close()
           if err
             return callback err
 
@@ -183,13 +184,13 @@ class Post
 
   ### 删除 ###
   @remove: (name, day, title, callback) ->
-    mongodb.open (err, db) ->
+    mongodb.connect settings.url, (err, db) ->
       if err
         callback err
 
       db.collection 'posts', (err, collection) ->
         if err
-          mongodb.close()
+          db.close()
           return callback err
 
         # 根据用户名，日期，标题修改文章
@@ -199,7 +200,7 @@ class Post
           time : +day # 被坑了，这货需要转换为数值型
         , w: 1
         , (err) ->
-          mongodb.close()
+          db.close()
           if err
             return callback err
 
@@ -208,13 +209,13 @@ class Post
 
   ### 分页读取 ###
   @getPage: (name, page, callback) ->
-    mongodb.open (err, db) ->
+    mongodb.connect settings.url, (err, db) ->
       if err
         callback err
 
       db.collection 'posts', (err, collection) ->
         if err
-          mongodb.close()
+          db.close()
           return callback err
 
         query = {}
@@ -228,7 +229,7 @@ class Post
             limit: 6
           )
           .sort(time: -1).toArray (err, docs) ->
-            mongodb.close()
+            db.close()
             if err
               return callback err
 
@@ -243,13 +244,13 @@ class Post
 
   ### 读取所有 ###
   @getAll: (name, callback) ->
-    mongodb.open (err, db) ->
+    mongodb.connect settings.url, (err, db) ->
       if err
         callback err
 
       db.collection 'posts', (err, collection) ->
         if err
-          mongodb.close()
+          db.close()
           return callback err
 
         query = {}
@@ -257,7 +258,7 @@ class Post
           query.name = name
 
         collection.find(query).sort(time: -1).toArray (err, docs) ->
-          mongodb.close()
+          db.close()
           if err
             return callback err
 
@@ -273,13 +274,13 @@ class Post
 
   ### 搜索 ###
   @search: (keyword, callback) ->
-    mongodb.open (err, db) ->
+    mongodb.connect settings.url, (err, db) ->
       if err
         callback err
 
       db.collection 'posts', (err, collection) ->
         if err
-          mongodb.close()
+          db.close()
           return callback err
 
         keyword = new RegExp keyword, 'i'
@@ -290,7 +291,7 @@ class Post
           time : 1
           title: 1
         ).sort(time: -1).toArray (err, docs) ->
-          mongodb.close()
+          db.close()
           if err
             return callback err
 
@@ -311,21 +312,21 @@ class Post
       time    : Date.now()
 
     # 打开数据库
-    mongodb.open (err, db) ->
+    mongodb.connect settings.url, (err, db) ->
       if err
         return callback err
 
       # 读取 posts 集合
       db.collection 'posts', (err, collection) ->
         if err
-          mongodb.close()
+          db.close()
           return callback err
 
         collection.insert(
           post
         , safe: true
         , (err, post) ->
-          mongodb.close()
+          db.close()
           if err
             return callback err
 

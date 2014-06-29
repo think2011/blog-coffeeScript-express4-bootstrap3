@@ -1,4 +1,5 @@
-mongodb    = require './db'
+settings = require '../settings'
+mongodb  = require('mongodb').Db
 
 class Comment
   constructor: (comment) ->
@@ -14,14 +15,14 @@ class Comment
       comment : @comment
 
     # 打开数据库
-    mongodb.open (err, db) ->
+    mongodb.connect settings.url, (err, db) ->
       if err
         return callback err
 
       # 读取 Post 集合
       db.collection 'posts', (err, collection) ->
         if err
-          mongodb.close()
+          db.close()
           return callback err
 
         collection.update

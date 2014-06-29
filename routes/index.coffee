@@ -23,8 +23,17 @@ checkLogin = (req, res, next) ->
     return res.redirect 'back'
   next()
 
+settings = require '../settings'
+mongodb  = require('mongodb').Db
 
 module.exports = (app) ->
+  app.get '/a', (req, res) ->
+    mongodb.connect settings.url, (err, db) ->
+      console.log err
+      console.log db
+    res.send '123123'
+
+
   # 首页
   app.get '/', (req, res) ->
     # 生成页数

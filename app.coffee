@@ -29,12 +29,10 @@ app.use logger {stream: accessLog}
 app.use bodyParser.json()
 app.use bodyParser.urlencoded()
 app.use cookieParser()
-# 设置session
 app.use session(
   secret: settings.cookieSecret
-  key   : settings.db
   cookie: maxAge: 1000 * 60 * 60 * 24 * 30
-  store : new MongoStore db: settings.db
+  store : new MongoStore url: settings.url
 )
 app.use express.static(path.join(__dirname, 'public'))
 
@@ -53,6 +51,7 @@ app.use (req, res, next) ->
   err = new Error('找不到页面')
   err.status = 404
   next(err)
+
 
 
 # 开发环境输出500

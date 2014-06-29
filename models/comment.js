@@ -40,7 +40,7 @@
               'comments': post.comment
             }
           }, function(err) {
-            mongodb.close();
+            db.close();
             if (err) {
               return callback(err);
             }

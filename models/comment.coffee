@@ -31,7 +31,7 @@ class Comment
           time  : +post.time # 被坑了，这货需要转换为数值型
         , $push : 'comments': post.comment
         , (err) ->
-          mongodb.close()
+          db.close()
           if err
             return callback err
 

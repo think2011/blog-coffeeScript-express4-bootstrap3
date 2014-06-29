@@ -1,0 +1,32 @@
+<%- include header %>
+
+<form method="post">
+    <div class="form-group">
+        <input type="text" name="title" class="form-control" placeholder="标题" autofocus />
+    </div>
+
+    <div class="form-group">
+        <textarea name="post" class="form-control" cols="30" rows="10" placeholder="正文内容"></textarea>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-4">
+                <input type="text" name="tags[0]" class="form-control input-sm" placeholder="标签1" />
+            </div>
+            <div class="col-xs-4">
+                <input type="text" name="tags[1]" class="form-control input-sm" placeholder="标签2" />
+            </div>
+            <div class="col-xs-4">
+                <input type="text" name="tags[2]" class="form-control input-sm" placeholder="标签3" />
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+    <button type="submit" class="btn btn-success pull-right">
+        提交发布
+    </button>
+</form>
+
+<%- include footer %>

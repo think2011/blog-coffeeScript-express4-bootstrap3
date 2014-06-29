@@ -1,0 +1,29 @@
+body {
+    margin:15px 0;
+}
+
+.container-fixed {
+    width: 900px;
+    margin:0 auto;
+}
+
+/* 首页 */
+.post {
+    position: relative;
+}
+
+.post .author {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.post p {
+    color: #777;
+}
+
+/* 头像 */
+.avatar {
+    border-radius: 3px;
+}
+

@@ -1,0 +1,16 @@
+<%- include header %>
+
+<% posts.forEach(function (v) { %>
+<div class="post">
+    <h2><a href="/u/<%= v.name %>/<%= v.time %>/<%= v.title %>"><%= v.title %></a></h2>
+    <h5 class="author text-muted"><a href="/u/<%= v.name %>"><%= v.name %></a> 发布于<%= v.date %></h5>
+    <p>
+        <%- v.post %>
+    </p>
+    <hr/>
+</div>
+<% }) %>
+
+<%- include paging %>
+
+<%- include footer %>

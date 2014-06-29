@@ -1,0 +1,25 @@
+<%- include header %>
+
+<form method="post">
+    <div class="form-group">
+        <label>用户名</label>
+        <input type="text" autofocus name="name" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>密码</label>
+        <input type="password" name="password" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>确认密码</label>
+        <input type="password" name="password_re" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>邮箱</label>
+        <input type="text" name="email" class="form-control">
+        <p class="help-block">邮箱同时也是您的 <a href="https://en.gravatar.com/">gravatar</a> 头像</p>
+    </div>
+
+    <button class="btn btn-success btn-block" type="submit">立即注册</button>
+</form>
+
+<%- include footer %>

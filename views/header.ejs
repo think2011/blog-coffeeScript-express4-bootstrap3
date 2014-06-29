@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/plugins/bootstrap/dist/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<div class="container-fixed">
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- 搜索区 -->
+            <div class="pull-right">
+                <form action="/search" method="GET">
+                    <div class="form-group has-feedback">
+                        <label class="control-label">　</label>
+                        <input type="text" name="keyword" class="form-control" placeholder="文章标题">
+                        <span class="text-muted glyphicon glyphicon-search form-control-feedback"></span>
+                    </div>
+                </form>
+            </div>
+
+            <h1 class="text-muted"><%= title %></h1>
+            <% if (success) { %>
+            <div class="alert alert-success text-center">
+                <%- success %>
+            </div>
+            <% } %>
+
+            <% if (error) { %>
+            <div class="alert alert-danger text-center">
+                <%- error %>
+            </div>
+            <% } %>
+            <hr/>
+        </div>
+        <div class="col-sm-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="/">首页</a></li>
+                <li><a href="/archive">存档</a></li>
+                <li><a href="/tags">标签</a></li>
+                <% if (user) { %>
+                <li><a href="/upload">上传</a></li>
+                <li><a href="/post">发表</a></li>
+                <li><a href="/logout">注销</a></li>
+                <% } else { %>
+                <li><a href="/login">登录</a></li>
+                <li><a href="/reg">注册</a></li>
+                <% } %>
+
+
+            </ul>
+        </div>
+        <div class="col-sm-10">

@@ -1,0 +1,16 @@
+<hr/>
+
+<% post.comments.forEach(function(v, k) { %>
+<div class="well">
+    <div class="text-muted">#<%= k+1 %> <%= v.name %> 回复于 <%= v.date %></div>
+    <p><%- v.content %></p>
+</div>
+<% }) %>
+
+<form method="post">
+    <div class="form-group">
+        <input type="text" name="name" class="form-control" placeholder="我的昵称 (可选)" />
+        <textarea name="content" rows="4" class="form-control" placeholder="我想说.."></textarea>
+    </div>
+    <button type="submit" class="btn btn-success pull-right">提交评论</button>
+</form>

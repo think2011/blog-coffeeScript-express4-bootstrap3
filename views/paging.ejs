@@ -1,0 +1,11 @@
+<ul class="pager">
+    <% if(!isFirst) { %>
+    <li class="previous"><a href="?p=<%= page - 1 %>">«</a></li>
+    <% } %>
+
+    <li class="badge"><%= page %> / <%= totalPage %></li>
+
+    <% if(!isLast) { %>
+    <li class="next"><a href="?p=<%= page + 1 %>">»</a></li>
+    <% } %>
+</ul>

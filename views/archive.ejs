@@ -1,0 +1,18 @@
+<%- include header %>
+
+<% posts.forEach(function (v) { %>
+<h2 class="text-muted"><%= v.date %></h2>
+<hr/>
+
+<ul>
+    <% v.list.forEach(function (v1) { %>
+    <li style="margin:10px 0;">
+        <small class="text-muted pull-right"><%= v1.date %></small>
+        <a href="/u/<%= v1.name %>/<%= v1.time %>/<%= v1.title %>"><%= v1.title %></a>
+    </li>
+    <% }) %>
+</ul>
+
+<% }) %>
+
+<%- include footer %>

@@ -1,0 +1,27 @@
+<%- include header %>
+
+<div class="post">
+    <h5 class="author text-muted">
+        <% if(user && user.name === post.name) { %>
+        <a href="/edit/<%= post.name %>/<%= post.time %>/<%= post.title %>" class="btn btn-warning btn-xs">编辑</a>
+        <% } %>
+        <img class="avatar" src="https://gravatar.com/avatar/<%= post.avatar %>?s=28" alt=""/> <a href="/u/<%= post.name %>"><%= post.name %></a>发布于<%= post.date %>
+        | 浏览数: <%= post.pv %>
+    </h5>
+    <br/>
+    <br/>
+    <p>
+        <%- post.post %>
+    </p>
+
+    <div class="tags">
+        <hr/>
+        <% post.tags.forEach(function(v) { %>
+        <span class="badge"><%= v %></span>
+        <% }) %>
+    </div>
+</div>
+
+<%- include comment %>
+
+<%- include footer %>

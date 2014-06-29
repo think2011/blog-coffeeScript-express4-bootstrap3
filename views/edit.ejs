@@ -1,0 +1,35 @@
+<%- include header %>
+
+<form method="post">
+    <div class="form-group">
+        <input type="text" name="title" value="<%= post.title %>" disabled class="form-control" placeholder="标题" />
+    </div>
+    <div class="form-group">
+        <textarea name="post" class="form-control" cols="30" rows="10" placeholder="正文内容"><%- post.post %></textarea>
+    </div>
+
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-4">
+                <input type="text" name="tags[0]" value="<%= post.tags[0]%>" class="form-control input-sm" placeholder="标签1" />
+            </div>
+            <div class="col-xs-4">
+                <input type="text" name="tags[1]" value="<%= post.tags[1]%>" class="form-control input-sm" placeholder="标签2" />
+            </div>
+            <div class="col-xs-4">
+                <input type="text" name="tags[2]" value="<%= post.tags[2] %>" class="form-control input-sm" placeholder="标签3" />
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+    <span class="pull-right">
+        <a href="/remove/<%= post.name %>/<%= post.time %>/<%= post.title %>" class="btn">删除</a>
+        <button type="submit" class="btn btn-info">
+            确认修改
+        </button>
+    </span>
+</form>
+
+<%- include footer %>

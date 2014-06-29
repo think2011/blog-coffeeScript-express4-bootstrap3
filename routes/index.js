@@ -39,13 +39,6 @@
   mongodb = require('mongodb').Db;
 
   module.exports = function(app) {
-    app.get('/a', function(req, res) {
-      mongodb.connect(settings.url, function(err, db) {
-        console.log(err);
-        return console.log(db);
-      });
-      return res.send('123123');
-    });
     app.get('/', function(req, res) {
       var page;
       page = req.query.p ? +req.query.p : 1;
